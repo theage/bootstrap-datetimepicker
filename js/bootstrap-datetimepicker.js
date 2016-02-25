@@ -421,6 +421,16 @@
       }
     },
 
+    getInputValue: function () {
+      if (this.isInput) {
+        return this.element.val();
+      } else if (this.component) {
+        return this.element.find('input').val();
+      } else {
+        return this.element.data('date');
+      }
+    },
+
     setFormat: function (format) {
       this.format = DPGlobal.parseFormat(format, this.formatType);
       var element;
@@ -649,7 +659,8 @@
         endYear = this.endDate !== Infinity ? this.endDate.getUTCFullYear() : Infinity,
         endMonth = this.endDate !== Infinity ? this.endDate.getUTCMonth() + 1 : Infinity,
         currentDate = (new UTCDate(this.date.getUTCFullYear(), this.date.getUTCMonth(), this.date.getUTCDate())).valueOf(),
-        today = new Date();
+        today = new Date(),
+        hasValue = this.getInputValue().trim() !== "";
       this.setTitle('.datetimepicker-days', dates[this.language].months[month] + ' ' + year)
       if (this.formatViewType == 'time') {
         var formatted = this.getFormattedDate();
@@ -721,7 +732,7 @@
         // We want the previous hour for the startDate
         if ((actual.valueOf() + 3600000) <= this.startDate || actual.valueOf() > this.endDate) {
           clsName += ' disabled';
-        } else if (hours == i) {
+        } else if (hasValue && (hours == i)) {
           clsName += ' active';
         }
         if (this.showMeridian && dates[this.language].meridiem.length == 2) {
@@ -754,7 +765,7 @@
         clsName = '';
         if (actual.valueOf() < this.startDate || actual.valueOf() > this.endDate) {
           clsName += ' disabled';
-        } else if (Math.floor(minutes / this.minuteStep) == Math.floor(i / this.minuteStep)) {
+        } else if (hasValue && (Math.floor(minutes / this.minuteStep) == Math.floor(i / this.minuteStep))) {
           clsName += ' active';
         }
         if (this.showMeridian && dates[this.language].meridiem.length == 2) {
