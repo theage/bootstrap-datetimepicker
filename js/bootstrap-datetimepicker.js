@@ -324,15 +324,16 @@
         ];
       }
 
-      if (this.scrollClose) {
-        var scrollCloseEvents = {
-          scroll: $.proxy(this.hide, this)
-        };
-        this._events.push(
-          [this.container, scrollCloseEvents],
-          [$(window), scrollCloseEvents]
-        );
-      }
+      var scrollEvents = {
+        scroll: this.scrollClose
+          ? $.proxy(this.place, this)
+          : $.proxy(this.hide, this)
+      };
+
+      this._events.push(
+        [this.container, scrollEvents],
+        [$(window), scrollEvents]
+      );
 
       for (var i = 0, el, ev; i < this._events.length; i++) {
         el = this._events[i][0];
