@@ -557,7 +557,7 @@
     },
 
     place: function () {
-      if (this.isInline) return;
+      if (this.isInline || !this.isVisible) return;
 
       if (!this.zIndex) {
         var index_highest = 0;
