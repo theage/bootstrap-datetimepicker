@@ -116,6 +116,13 @@
     }
     this.icontype = this.fontAwesome ? 'fa' : 'glyphicon';
 
+    this.scrollClose = false;
+    if ('scrollClose' in options) {
+      this.scrollClose = options.scrollClose;
+    } else if ('scrollClose' in this.element.data()) {
+      this.scrollClose = this.element.data('date-scroll-close');
+    }
+
     this._attachEvents();
 
     this.clickedOutside = function (e) {
@@ -315,6 +322,17 @@
           }]
         ];
       }
+
+      if (this.scrollClose) {
+        var scrollCloseEvents = {
+          scroll: $.proxy(this.hide, this)
+        };
+        this._events.push(
+          [this.container, scrollCloseEvents],
+          [$(window), scrollCloseEvents]
+        );
+      }
+
       for (var i = 0, el, ev; i < this._events.length; i++) {
         el = this._events[i][0];
         ev = this._events[i][1];
@@ -1778,7 +1796,7 @@
                 '</tr>' +
       '</thead>',
     contTemplate: '<tbody><tr><td colspan="7"></td></tr></tbody>',
-    footTemplate: '<tfoot>' + 
+    footTemplate: '<tfoot>' +
                     '<tr><th colspan="7" class="today"></th></tr>' +
                     '<tr><th colspan="7" class="clear"></th></tr>' +
                   '</tfoot>'
