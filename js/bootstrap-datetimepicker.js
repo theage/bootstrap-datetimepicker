@@ -289,7 +289,8 @@
           [this.element, {
             focus:   $.proxy(this.show, this),
             keyup:   $.proxy(this.update, this),
-            keydown: $.proxy(this.keydown, this)
+            keydown: $.proxy(this.keydown, this),
+            input:   $.proxy(this.update, this)
           }]
         ];
       }
