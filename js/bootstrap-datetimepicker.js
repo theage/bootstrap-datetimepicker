@@ -324,17 +324,6 @@
         ];
       }
 
-      var scrollEvents = {
-        scroll: this.scrollClose
-          ? $.proxy(this.place, this)
-          : $.proxy(this.hide, this)
-      };
-
-      this._events.push(
-        [this.container, scrollEvents],
-        [$(window), scrollEvents]
-      );
-
       for (var i = 0, el, ev; i < this._events.length; i++) {
         el = this._events[i][0];
         ev = this._events[i][1];
@@ -357,7 +346,17 @@
       if (this.forceParse) {
         this.update();
       }
-      $(window).on('resize', $.proxy(this.place, this));
+
+      var placeProxy = $.proxy(this.place, this);
+
+      $(window).on('resize', placeProxy);
+
+      var scrollHandler = this.scrollClose
+          ? placeProxy
+          : $.proxy(this.hide, this);
+      $(window).on('scroll', scrollHandler);
+      $(this.container).on('scroll', scrollHandler);
+
       if (e) {
         e.stopPropagation();
         e.preventDefault();
@@ -375,7 +374,15 @@
       if (!this.isVisible) return;
       if (this.isInline) return;
       this.picker.hide();
+
+      var scrollHandler = this.scrollClose
+          ? this.place
+          : this.hide;
+      $(this.container).off('scroll', scrollHandler);
+      $(window).off('scroll', scrollHandler);
+
       $(window).off('resize', this.place);
+
       this.viewMode = this.startViewMode;
       this.showMode();
       if (!this.isInput) {
