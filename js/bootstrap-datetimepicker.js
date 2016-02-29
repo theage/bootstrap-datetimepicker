@@ -357,7 +357,6 @@
       if (this.forceParse) {
         this.update();
       }
-      this.place();
       $(window).on('resize', $.proxy(this.place, this));
       if (e) {
         e.stopPropagation();
@@ -368,6 +367,8 @@
         type: 'show',
         date: this.date
       });
+
+      this.place();
     },
 
     hide: function (e) {
