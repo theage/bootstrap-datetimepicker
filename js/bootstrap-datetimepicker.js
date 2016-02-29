@@ -119,7 +119,7 @@
     this.scrollClose = false;
     if ('scrollClose' in options) {
       this.scrollClose = options.scrollClose;
-    } else if ('scrollClose' in this.element.data()) {
+    } else if ('date-scroll-close' in this.element.data()) {
       this.scrollClose = this.element.data('date-scroll-close');
     }
 
