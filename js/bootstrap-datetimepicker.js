@@ -116,6 +116,13 @@
     }
     this.icontype = this.fontAwesome ? 'fa' : 'glyphicon';
 
+    this.cssClass = false;
+    if ('cssClass' in options) {
+      this.cssClass = options.cssClass;
+    } else if ('date-css-class' in this.element.data()) {
+      this.cssClass = this.element.data('date-css-class');
+    }
+
     this.scrollClose = false;
     if ('scrollClose' in options) {
       this.scrollClose = options.scrollClose;
@@ -229,6 +236,9 @@
       this.picker.addClass('datetimepicker-inline');
     } else {
       this.picker.addClass('datetimepicker-dropdown-' + this.pickerPosition + ' dropdown-menu');
+    }
+    if (this.cssClass) {
+      this.picker.addClass(this.cssClass);
     }
     if (this.isRTL) {
       this.picker.addClass('datetimepicker-rtl');
