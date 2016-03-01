@@ -698,7 +698,7 @@
         endMonth = this.endDate !== Infinity ? this.endDate.getUTCMonth() + 1 : Infinity,
         currentDate = (new UTCDate(this.date.getUTCFullYear(), this.date.getUTCMonth(), this.date.getUTCDate())).valueOf(),
         today = new Date(),
-        hasValue = this.getInputValue().trim() !== "";
+        hasValue = String( this.getInputValue() || "" ).trim() !== "";
       this.setTitle('.datetimepicker-days', dates[this.language].months[month] + ' ' + year)
       if (this.formatViewType == 'time') {
         var formatted = this.getFormattedDate();
