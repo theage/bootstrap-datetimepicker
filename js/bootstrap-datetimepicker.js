@@ -362,8 +362,8 @@
       $(window).on('resize', placeProxy);
 
       var scrollHandler = this.scrollClose
-          ? placeProxy
-          : $.proxy(this.hide, this);
+          ? $.proxy(this.hide, this)
+          : placeProxy;
       $(window).on('scroll', scrollHandler);
       $(this.container).on('scroll', scrollHandler);
 
